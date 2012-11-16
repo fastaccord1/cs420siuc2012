@@ -3,6 +3,7 @@ package cs420.buySell.client;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 
 /**
@@ -26,7 +27,18 @@ public class SocketClientToClient implements Runnable{
 
     }
 
-    public void sendData()
+    public void sendData(String sendMessage, InetAddress client) {
+        try {
+            byte[] data = sendMessage.getBytes();
+
+            DatagramPacket sendPacket = new DatagramPacket(data, data.length, client, PORT);
+            socket.send(sendPacket);
+
+        } catch(IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+    }
 
     public void waitForPackets() {
         while(true) {
