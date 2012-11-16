@@ -2,27 +2,28 @@ package cs420.buySell.server;
 
 import javax.net.ssl.*;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.util.LinkedList;
 
 /**
- * Socket.java
+ * SocketServer.java
  */
-public class Socket implements Runnable {
+public class SocketServer {
 
     private SSLServerSocketFactory socketFactory;
     private SSLServerSocket serverSocket;
-    private SSLSocket socket;
+    private LinkedList<SocketServerThread> socketServers;
     private KeyStore keyStore;
     private KeyManager[] keyManagers;
     private SSLContext sslContext;
-    private SSLSession sslSession;
+    //private SSLSession sslSession;
     private final int PORT = 25000;
 
-    public Socket() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException,
+    public SocketServer() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException,
             UnrecoverableKeyException, KeyManagementException {
+        socketServers = new LinkedList<SocketServerThread>();
         keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
         keyStore.load(new FileInputStream("keystore.ks"), null);
 
@@ -38,10 +39,13 @@ public class Socket implements Runnable {
         socketFactory = sslContext.getServerSocketFactory();
         serverSocket = (SSLServerSocket)socketFactory.createServerSocket(PORT);
 
+        SocketServerThread socketServer = new SocketServerThread((SSLSocket)serverSocket.accept());
+        socketServers.add(socketServer);
+
+        socketServer.start();
+
+
     }
 
-    @Override
-    public void run() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 }
