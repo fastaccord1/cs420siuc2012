@@ -3,11 +3,9 @@ package cs420.buySell.server;
 import javax.net.ssl.HandshakeCompletedEvent;
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSocket;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,16 +24,28 @@ public class SocketServerThread extends Thread{
         this.socket = socket;
     }
 
-    public void sendMessage(String Message) throws IOException {
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        out.println(Message);
+    public void sendMessage(Object message) throws IOException {
+        ObjectOutputStream objOutStream = new ObjectOutputStream(socket.getOutputStream());
+        objOutStream.writeObject(message);
     }
 
-    public void waitForMessage() throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()
-                ));
+    public void waitForMessage(Scanner input) throws IOException, ClassNotFoundException {
+        ObjectInputStream objInStream = new ObjectInputStream(socket.getInputStream());
+        Object inputObject = objInStream.readObject();
+        if(inputObject instanceof String) {
+            interpretMessage((String) inputObject);
+        }
+        else {
+            //do something
+        }
 
+
+    }
+
+    public void interpretMessage(String message) {
+        if(message.equals("update_database")) {
+
+        }
     }
 
     @Override
@@ -44,13 +54,20 @@ public class SocketServerThread extends Thread{
         socket.addHandshakeCompletedListener(new HandshakeCompletedListener() {
             @Override
             public void handshakeCompleted(HandshakeCompletedEvent handshakeCompletedEvent) {
-                while(true) {
-                    try {
-                        waitForMessage();
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                Scanner input;
+                try {
+                    input = new Scanner(new InputStreamReader(socket.getInputStream()));
+                    while(true) {
+                        try {
+                            waitForMessage(input);
+                        } catch (IOException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
+
             }
         });
 
