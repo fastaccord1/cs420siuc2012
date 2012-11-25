@@ -29,7 +29,7 @@ public class SocketServerThread extends Thread{
         objOutStream.writeObject(message);
     }
 
-    public void waitForMessage(Scanner input) throws IOException, ClassNotFoundException {
+    public void waitForMessage() throws IOException, ClassNotFoundException {
         ObjectInputStream objInStream = new ObjectInputStream(socket.getInputStream());
         Object inputObject = objInStream.readObject();
         if(inputObject instanceof String) {
@@ -54,11 +54,9 @@ public class SocketServerThread extends Thread{
         socket.addHandshakeCompletedListener(new HandshakeCompletedListener() {
             @Override
             public void handshakeCompleted(HandshakeCompletedEvent handshakeCompletedEvent) {
-                Scanner input;
                 try {
-                    input = new Scanner(new InputStreamReader(socket.getInputStream()));
                     while(true) {
-                        waitForMessage(input);
+                        waitForMessage();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
