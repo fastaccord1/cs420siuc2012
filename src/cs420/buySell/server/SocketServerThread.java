@@ -43,7 +43,13 @@ public class SocketServerThread extends Thread{
 
     public void interpretMessage(String message) {
         if(message.equals("update_database")) {
-
+            System.out.println("Received something");
+            String output = "updated_info";
+            try {
+                sendMessage(output);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
         }
     }
 
