@@ -5,7 +5,6 @@ import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.net.InetAddress;
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,13 +53,16 @@ public class SocketServerThread extends Thread{
         socket.addHandshakeCompletedListener(new HandshakeCompletedListener() {
             @Override
             public void handshakeCompleted(HandshakeCompletedEvent handshakeCompletedEvent) {
-                try {
-                    while(true) {
+
+                while(true) {
+                    try {
                         waitForMessage();
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                        break;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
+
 
             }
         });
