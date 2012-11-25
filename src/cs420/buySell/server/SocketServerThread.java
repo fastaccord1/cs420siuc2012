@@ -58,13 +58,9 @@ public class SocketServerThread extends Thread{
                 try {
                     input = new Scanner(new InputStreamReader(socket.getInputStream()));
                     while(true) {
-                        try {
-                            waitForMessage(input);
-                        } catch (IOException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                        }
+                        waitForMessage(input);
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
 
