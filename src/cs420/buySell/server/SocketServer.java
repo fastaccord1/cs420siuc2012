@@ -24,6 +24,7 @@ public class SocketServer {
     public SocketServer() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException,
             UnrecoverableKeyException, KeyManagementException {
         socketServers = new LinkedList<SocketServerThread>();
+
         keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
         keyStore.load(new FileInputStream("keystore.ks"), null);
 
