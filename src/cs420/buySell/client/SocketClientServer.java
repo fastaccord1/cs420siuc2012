@@ -1,49 +1,75 @@
 package cs420.buySell.client;
 
 import javax.net.ssl.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.security.*;
 import java.security.cert.CertificateException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: kreuter
- * Date: 11/15/12
- * Time: 6:17 PM
- * To change this template use File | Settings | File Templates.
+ * SocketClientServer.java
+ *
+ * This class handles communication between the client and the server on the Client side.
  */
-public class SocketClientServer {
+public class SocketClientServer extends Thread {
 
     private SSLSocket socket;
-    private SSLSocketFactory socketFactory;
-    private KeyStore keyStore;
-    private KeyManager[] keyManagers;
-    private SSLContext sslContext;
 
     public SocketClientServer(InetAddress serverAddress, int port) throws KeyStoreException,
             IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException,
             KeyManagementException {
 
-        keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
         keyStore.load(new FileInputStream("keystore.ks"), null);
 
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(keyStore, null);
 
-        sslContext = SSLContext.getInstance("SSLv3");
+        SSLContext sslContext = SSLContext.getInstance("SSLv3");
 
-        keyManagers = keyManagerFactory.getKeyManagers();
+        KeyManager[] keyManagers = keyManagerFactory.getKeyManagers();
 
         sslContext.init(keyManagers, null, null);
 
-        socketFactory = sslContext.getSocketFactory();
+        SSLSocketFactory socketFactory = sslContext.getSocketFactory();
 
-        socket = (SSLSocket)socketFactory.createSocket(serverAddress, port);
+        socket = (SSLSocket) socketFactory.createSocket(serverAddress, port);
 
         socket.startHandshake();
 
+    }
+
+    public void sendMessage(Object message) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(message);
+    }
+
+    public void waitForMessage() throws ClassNotFoundException, IOException {
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        Object message = in.readObject();
+
+        if(message instanceof String) {
+            interpret((String)message);
+        }
+    }
+
+    public void interpret(String message) {
+
+        if(message.equals("updated_info")) {
+            System.out.println("Updated info coming in");
+        }
+
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            try {
+                waitForMessage();
+            } catch(Exception e) {
+                e.printStackTrace();
+                break;
+            }
+        }
     }
 }
