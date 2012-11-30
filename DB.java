@@ -20,7 +20,8 @@ public class DB {
       try {
         
          // Create and execute an SQL statement that returns some data.
-          String SQL = q.qGetItems("nil", "nil", "nil");
+          //String SQL = q.qGetItems("nil", "nil", "nil");
+    	  String SQL =q.qGetUserPool();
     	 // String SQL = q.qGetUsers("nil", "nil", "nil");
     	 // String SQL = q.qGetVendors("nil", "nil", "1", "nil");
     	 // String SQL =q.qGetWTBFull("nil", "nil", "nil", "nil", "nil", "nil", "nil","nil", "WTB");
@@ -34,7 +35,7 @@ public class DB {
          //inst.executeUpdate((q.qInsertWTS("9", "1", "1", "5", "99.54", "01/27/2013")));
        // inst.executeUpdate(q.qUpdateWTS("2", "2", "8", "99.65", "12/18/2014", "9"));
          //inst.executeUpdate(q.qDeleteWTS("9"));
-         inst.executeUpdate(Queries.qInsertUserPool("192.168.4.1", "9008"));
+         inst.executeUpdate(Queries.qUpdateUserPool("1"));
         //System.out.println(q.qUpdateVendors("Phils goat emporium", "The YMCA", "1","8","RAGE")); 
          // Iterate through the data in the result set and display it.
          while (rs.next()) {

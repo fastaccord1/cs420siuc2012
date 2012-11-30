@@ -187,9 +187,18 @@ public class Queries {
 		s="delete from WTS where ID="+Integer.parseInt(key);
 		return s;
 	}
-	public static String qInsertUserPool(String IP, String Port){
+	public static String qInsertUserPool(String IP, String Port, String UID){
 		String s=null;
-		s="insert into UserPool values(' "+IP+"','"+Port+"',"+"getdate())";
+		s="insert into UserPool values(' "+IP+"','"+Port+"',"+"getdate(),"+Integer.parseInt(UID)+")";
+		return s;
+	}
+	public static String qUpdateUserPool(String UID){
+		String s = null;
+		s="update Userpool set LastActive=getdate() where Userid="+Integer.parseInt(UID);
+		return s;
+	}
+	public static String qGetUserPool(){
+		String s="select * from userpool where LastActive>getdate()-.01";
 		return s;
 	}
 	
