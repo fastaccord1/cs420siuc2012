@@ -20,11 +20,11 @@ public class DB {
       try {
         
          // Create and execute an SQL statement that returns some data.
-         // String SQL = q.qGetItems("nil", "nil", "nil");
+          String SQL = q.qGetItems("nil", "nil", "nil");
     	 // String SQL = q.qGetUsers("nil", "nil", "nil");
     	 // String SQL = q.qGetVendors("nil", "nil", "1", "nil");
     	 // String SQL =q.qGetWTBFull("nil", "nil", "nil", "nil", "nil", "nil", "nil","nil", "WTB");
-    	 String SQL = q.qGetWTSFull("nil", "CISCO", "nil", "nil", "nil", "nil", "nil", "nil"); 
+    	 //String SQL = q.qGetWTSFull("nil", "CISCO", "nil", "nil", "nil", "nil", "nil", "nil"); 
          stmt = con.createStatement();
          inst=con.createStatement();
          
@@ -33,7 +33,8 @@ public class DB {
          //inst.executeUpdate((q.qInsertWTB("9", "1", "1", "WTB", "12/12/2012", "1", "99.99")));
          //inst.executeUpdate((q.qInsertWTS("9", "1", "1", "5", "99.54", "01/27/2013")));
        // inst.executeUpdate(q.qUpdateWTS("2", "2", "8", "99.65", "12/18/2014", "9"));
-         inst.executeUpdate(q.qDeleteWTS("9"));
+         //inst.executeUpdate(q.qDeleteWTS("9"));
+         inst.executeUpdate(Queries.qInsertUserPool("192.168.4.1", "9008"));
         //System.out.println(q.qUpdateVendors("Phils goat emporium", "The YMCA", "1","8","RAGE")); 
          // Iterate through the data in the result set and display it.
          while (rs.next()) {

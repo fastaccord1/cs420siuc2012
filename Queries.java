@@ -187,5 +187,10 @@ public class Queries {
 		s="delete from WTS where ID="+Integer.parseInt(key);
 		return s;
 	}
+	public static String qInsertUserPool(String IP, String Port){
+		String s=null;
+		s="insert into UserPool values(' "+IP+"','"+Port+"',"+"getdate())";
+		return s;
+	}
 	
 }
