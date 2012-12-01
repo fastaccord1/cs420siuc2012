@@ -1,4 +1,4 @@
-package buySell.database;
+package cs420.buySell.database;
 
 public class Queries {
 	

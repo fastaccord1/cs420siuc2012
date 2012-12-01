@@ -1,4 +1,4 @@
-package buySell.database;
+package cs420.buySell.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
