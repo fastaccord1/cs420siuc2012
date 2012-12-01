@@ -15,22 +15,22 @@ import java.util.List;
  */
 public class ClientSocket implements Runnable{
 
-    private DatagramSocket socket;
-    private final int PORT = 25001;
+    private static DatagramSocket socket;
 
     /**
      * Constructor method that creates the Datagram socket to send and receive messages.
      */
     public ClientSocket() {
         try {
-            socket = new DatagramSocket(PORT);
+            int port = 25001;
+            socket = new DatagramSocket(port);
         } catch (SocketException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void sendData(String sendMessage, InetAddress client, int port) {
+    public static void sendData(String sendMessage, InetAddress client, int port) {
         try {
             byte[] data = sendMessage.getBytes();
 
@@ -45,25 +45,27 @@ public class ClientSocket implements Runnable{
     }
 
     public void waitForPackets() {
-        while(true) {
-            try{
-                byte[] data = new byte[1024];
-                DatagramPacket received = new DatagramPacket(data, data.length);
+        try{
+            while(true) {
+                    byte[] data = new byte[1024];
+                    DatagramPacket received = new DatagramPacket(data, data.length);
 
 
-                socket.receive(received);
-                String output = new String(received.getData());
+                    socket.receive(received);
+                    String output = new String(received.getData());
 
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    interpret(output);
+
+
+
             }
-
-
+        } catch(IOException e) {
+            e.printStackTrace();
         }
 
     }
 
-    public void sendUpdateBuy(List<Client> clients) {
+    public static void sendUpdateBuy(List<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
@@ -74,7 +76,7 @@ public class ClientSocket implements Runnable{
         }
     }
 
-    public void sendUpdateSell(List<Client> clients) {
+    public static void sendUpdateSell(List<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
@@ -82,6 +84,16 @@ public class ClientSocket implements Runnable{
             String output = "Update_want_to_sell";
 
             sendData(output, address, port);
+        }
+    }
+
+    public void interpret(String message) {
+        if (message.equals("Update_want_to_sell")) {
+            System.out.println("Sell update");
+
+        } else if (message.equals("Update_want_to_buy")) {
+            System.out.println("buy update");
+
         }
     }
 
