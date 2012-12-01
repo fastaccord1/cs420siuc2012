@@ -63,6 +63,27 @@ public class ClientSocket implements Runnable{
 
     }
 
+    public void sendUpdateBuy(List<Client> clients) {
+        for(Client client : clients) {
+            InetAddress address = client.getAddress();
+            int port = client.getPort();
+
+            String output = "Update_want_to_buy";
+
+            sendData(output, address, port);
+        }
+    }
+
+    public void sendUpdateSell(List<Client> clients) {
+        for(Client client : clients) {
+            InetAddress address = client.getAddress();
+            int port = client.getPort();
+
+            String output = "Update_want_to_sell";
+
+            sendData(output, address, port);
+        }
+    }
 
 
     @Override
