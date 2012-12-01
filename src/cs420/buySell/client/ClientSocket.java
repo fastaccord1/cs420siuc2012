@@ -5,19 +5,22 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: kreuter
- * Date: 11/15/12
- * Time: 6:18 PM
- * To change this template use File | Settings | File Templates.
+ * ClientSocket.java
+ *
+ * This class will handle communication between the different clients. It will send the update messages
+ * when necessary and call an update method when a message is received.
  */
 public class ClientSocket implements Runnable{
 
     private DatagramSocket socket;
     private final int PORT = 25001;
 
+    /**
+     * Constructor method that creates the Datagram socket to send and receive messages.
+     */
     public ClientSocket() {
         try {
             socket = new DatagramSocket(PORT);
@@ -27,12 +30,13 @@ public class ClientSocket implements Runnable{
 
     }
 
-    public void sendData(String sendMessage, InetAddress client) {
+    public void sendData(String sendMessage, InetAddress client, int port) {
         try {
             byte[] data = sendMessage.getBytes();
 
-            DatagramPacket sendPacket = new DatagramPacket(data, data.length, client, PORT);
+            DatagramPacket sendPacket = new DatagramPacket(data, data.length, client, port);
             socket.send(sendPacket);
+
 
         } catch(IOException ioException) {
             ioException.printStackTrace();
@@ -58,6 +62,8 @@ public class ClientSocket implements Runnable{
         }
 
     }
+
+
 
     @Override
     public void run() {
