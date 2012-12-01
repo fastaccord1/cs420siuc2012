@@ -13,12 +13,12 @@ import java.net.SocketException;
  * Time: 6:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SocketClientToClient implements Runnable{
+public class ClientSocket implements Runnable{
 
     private DatagramSocket socket;
     private final int PORT = 25001;
 
-    public SocketClientToClient() {
+    public ClientSocket() {
         try {
             socket = new DatagramSocket(PORT);
         } catch (SocketException e) {
