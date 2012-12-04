@@ -1,10 +1,10 @@
 package cs420.buySell.client;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,6 +95,48 @@ public class ClientSocket implements Runnable{
             System.out.println("buy update");
 
         }
+    }
+
+    public static void updateBuy(ResultSet rs) {
+        try {
+            List<Client> clients = parseClients(rs);
+            sendUpdateBuy(clients);
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+    }
+
+    public static void UpdateSell(ResultSet rs) {
+
+        try {
+            List<Client> clients = parseClients(rs);
+            sendUpdateSell(clients);
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+    }
+
+    public static List<Client> parseClients(ResultSet rs) throws SQLException, UnknownHostException {
+        List<Client> clients = new ArrayList<Client>();
+        while(rs.next()) {
+            String address = rs.getString(1);
+            String port = rs.getString(2);
+
+            int outPort = Integer.parseInt(port);
+            InetAddress outAddress = InetAddress.getByName(address);
+
+            Client client = new Client(outAddress, outPort);
+            clients.add(client);
+        }
+
+        return clients;
     }
 
 
