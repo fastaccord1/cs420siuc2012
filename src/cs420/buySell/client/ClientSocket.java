@@ -1,4 +1,4 @@
-package my.buysell;
+package cs420.buySell.client;
 
 import java.io.IOException;
 import java.net.*;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import cs420.buySell.gui.*;
 
 /**
  * ClientSocket.java
