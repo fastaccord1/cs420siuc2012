@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import cs420.buySell.gui.*;
 
 /**
@@ -24,7 +26,8 @@ public class ClientSocket extends Thread{
      */
     public ClientSocket(BuySellUI ui) {
         try {
-            int port = 25001;
+            Random rand = new Random();
+            int port = rand.nextInt(30000);
             socket = new DatagramSocket(port);
             
         } catch (SocketException e) {
@@ -94,9 +97,11 @@ public class ClientSocket extends Thread{
 
     public void interpret(String message) {
         if (message.equals("Update_want_to_sell")) {
+            System.out.println("Something came in");
             ui.refreshWTS();
 
         } else if (message.equals("Update_want_to_buy")) {
+            System.out.println("buy came in");
             ui.refreshWTB();
 
         }
