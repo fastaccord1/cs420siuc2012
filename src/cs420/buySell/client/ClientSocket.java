@@ -1,4 +1,4 @@
-package cs420.buySell.client;
+package my.buysell;
 
 import java.io.IOException;
 import java.net.*;
@@ -13,24 +13,28 @@ import java.util.List;
  * This class will handle communication between the different clients. It will send the update messages
  * when necessary and call an update method when a message is received.
  */
-public class ClientSocket implements Runnable{
+public class ClientSocket extends Thread{
 
-    private static DatagramSocket socket;
+    private DatagramSocket socket;
+    private BuySellUI ui;
 
     /**
      * Constructor method that creates the Datagram socket to send and receive messages.
      */
-    public ClientSocket() {
+    public ClientSocket(BuySellUI ui) {
         try {
             int port = 25001;
             socket = new DatagramSocket(port);
+            
         } catch (SocketException e) {
             e.printStackTrace();
         }
+        
+        this.ui = ui;
 
     }
 
-    public static void sendData(String sendMessage, InetAddress client, int port) {
+    public void sendData(String sendMessage, InetAddress client, int port) {
         try {
             byte[] data = sendMessage.getBytes();
 
@@ -65,7 +69,7 @@ public class ClientSocket implements Runnable{
 
     }
 
-    public static void sendUpdateBuy(List<Client> clients) {
+    public void sendUpdateBuy(List<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
@@ -76,7 +80,7 @@ public class ClientSocket implements Runnable{
         }
     }
 
-    public static void sendUpdateSell(List<Client> clients) {
+    public void sendUpdateSell(List<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
@@ -89,15 +93,15 @@ public class ClientSocket implements Runnable{
 
     public void interpret(String message) {
         if (message.equals("Update_want_to_sell")) {
-            System.out.println("Sell update");
+            ui.refreshWTS();
 
         } else if (message.equals("Update_want_to_buy")) {
-            System.out.println("buy update");
+            ui.refreshWTB();
 
         }
     }
 
-    public static void updateBuy(ResultSet rs) {
+    public void updateBuy(ResultSet rs) {
         try {
             List<Client> clients = parseClients(rs);
             sendUpdateBuy(clients);
@@ -109,7 +113,7 @@ public class ClientSocket implements Runnable{
 
     }
 
-    public static void UpdateSell(ResultSet rs) {
+    public void updateSell(ResultSet rs) {
 
         try {
             List<Client> clients = parseClients(rs);
@@ -123,7 +127,7 @@ public class ClientSocket implements Runnable{
 
     }
 
-    public static List<Client> parseClients(ResultSet rs) throws SQLException, UnknownHostException {
+    public List<Client> parseClients(ResultSet rs) throws SQLException, UnknownHostException {
         List<Client> clients = new ArrayList<Client>();
         while(rs.next()) {
             String address = rs.getString(1);
