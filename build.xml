@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="buy_sell_420" default="all">
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/.pyc/**"/>
+        <exclude name="**/.pyo/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/*.lib/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/__pycache__/**"/>
+        <exclude name="**/.bundle/**"/>
+        <exclude name="**/*.rbc/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.zip"/>
+        <include name="*.apk"/>
+        <include name="*.war"/>
+        <include name="*.egg"/>
+        <include name="*.ear"/>
+        <include name="*.ane"/>
+        <include name="*.swc"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+        <include name="**/?*.ftl"/>
+    </patternset>
+
+
+
+    <dirname property="module.buy_sell_420.basedir" file="${ant.file}"/>
+
+
+
+    <path id="library.sqljdbc4.classpath">
+        <pathelement location="${basedir}/jar/sqljdbc4.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="out" />
+    </target>
+    
+    <target name="compile">
+        <mkdir dir="out/classes"/>
+        <mkdir dir="out/classes/cs420/buySell/client"/>
+        <mkdir dir="out/classes/cs420/buySell/database"/>
+        <mkdir dir="out/classes/cs420/buySell/gui"/>
+        <javac classpath="src" srcdir="src/cs420/buySell/client" destdir="out/classes" includeantruntime="false"/>
+        <javac classpath="src" srcdir="src/cs420/buySell/database" destdir="out/classes" includeantruntime="false">
+            <classpath path="jar/sqljdbc4.jar"/>
+        </javac>
+        <javac classpath="src" srcdir="src/cs420/buySell/gui" destdir="out/classes" includeantruntime="false"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="out/jar"/>
+        <jar destfile="out/jar/test.jar" basedir="out/classes">
+            <manifest>
+                <attribute name="Main-Class" value="cs420.buySell.gui.Login" />
+            </manifest>
+        </jar>
+
+    </target>
+    
+    <target name="all" depends="clean, compile, jar" description="Make All" />
+</project>
