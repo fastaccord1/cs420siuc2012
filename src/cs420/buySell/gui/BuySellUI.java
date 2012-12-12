@@ -851,6 +851,7 @@ public class BuySellUI extends javax.swing.JFrame {
             comm.sendGetList();
             LinkedList<Client> clients = comm.getClientList();
             socket.sendUpdateBuy(clients);
+            socket.sendUpdateSell(clients);
 
         }
        
@@ -939,6 +940,7 @@ public class BuySellUI extends javax.swing.JFrame {
             comm.sendGetList();
             LinkedList<Client> clients = comm.getClientList();
             socket.sendUpdateSell(clients);
+            socket.sendUpdateBuy(clients);
         
 
         }
@@ -1038,6 +1040,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 comm.sendGetList();
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateBuy(clients);
+                socket.sendUpdateSell(clients);
 
             }
         }
@@ -1105,6 +1108,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 comm.sendGetList();
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateSell(clients);
+                socket.sendUpdateBuy(clients);
             }
         }
        
@@ -1223,6 +1227,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 comm.sendGetList();
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateSell(clients);
+                socket.sendUpdateBuy(clients);
             }
         }
        
@@ -1293,6 +1298,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 comm.sendGetList();
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateBuy(clients);
+                socket.sendUpdateSell(clients);
             }
         }
        
