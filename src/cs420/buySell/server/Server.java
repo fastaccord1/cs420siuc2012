@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import cs420.buySell.client.Client;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,10 +22,10 @@ public class Server {
 
     private static int port;
     private static final int MAX_CONNECTIONS = 100;
-    private static LinkedList<InetAddress> clients;
+    private static LinkedList<Client> clients;
 
     public static void main(String[] args) {
-        clients = new LinkedList<InetAddress>();
+        clients = new LinkedList<Client>();
         try{
             port = 25001;
             serverSocket = new ServerSocket(port);
@@ -35,7 +36,7 @@ public class Server {
                 Communication comm;
 
                 server = serverSocket.accept();
-                clients.add(server.getInetAddress());
+
                 comm = new Communication(server, clients);
                 Thread t = new Thread(comm);
                 t.start();
@@ -54,9 +55,9 @@ public class Server {
 class Communication implements Runnable{
     private Socket socket;
     private String line, input;
-    private LinkedList<InetAddress> clients;
+    private LinkedList<Client> clients;
 
-    Communication(Socket socket, LinkedList<InetAddress> clients){
+    Communication(Socket socket, LinkedList<Client> clients){
         this.socket = socket;
         this.clients = clients;
 
@@ -68,13 +69,15 @@ class Communication implements Runnable{
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintStream out = new PrintStream(socket.getOutputStream());
 
+            String output = "send_port";
+            out.println(output);
+            out.flush();
+            String input = in.readLine();
+            int port = Integer.parseInt(input);
+            Client client = new Client(socket.getInetAddress(), port);
+            clients.add(client);
             while((line = in.readLine()) != null){
-                System.out.println(line);
-                for (InetAddress client : clients){
-                    System.out.println(client.getHostAddress());
-                }
-                //input=input+line;
-                //out.println("I got: " + line);
+                interpret(line);
             }
             System.out.println("Total message: " + input);
             clients.remove(clients.indexOf(socket.getInetAddress()));
@@ -83,6 +86,29 @@ class Communication implements Runnable{
         } catch(IOException e){
             e.printStackTrace();
         }
+
+    }
+
+    public void interpret(String input) throws IOException {
+        if(input.equals("get_list")){
+            sendList();
+        }
+
+    }
+
+    public void sendList() throws IOException {
+        String output = "list_incoming";
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        out.println(output);
+        out.flush();
+        for(Client client : clients){
+            out.println(client);
+            out.flush();
+        }
+        out.println("end_of_list");
+        out.flush();
+
+
 
     }
 
