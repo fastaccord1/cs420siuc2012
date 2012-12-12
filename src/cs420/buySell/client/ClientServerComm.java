@@ -21,6 +21,7 @@ public class ClientServerComm implements Runnable{
     private static PrintWriter out;
     private BufferedReader in;
     private LinkedList<Client> clients;
+    private final String SERVER="131.230.6.172";
 
     /**
      * Constructor that sets up the socket to handle the communication between client and server
@@ -28,7 +29,7 @@ public class ClientServerComm implements Runnable{
     public ClientServerComm(){
         try{
             //Change the address
-            socket = new Socket(InetAddress.getByName(""), 25001);
+            socket = new Socket(InetAddress.getByName(SERVER), 25001);
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             clients = new LinkedList<Client>();
