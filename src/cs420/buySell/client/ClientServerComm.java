@@ -7,14 +7,14 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
- * Created with IntelliJ IDEA.
- * User: kevin
- * Date: 12/11/12
- * Time: 9:29 PM
- * To change this template use File | Settings | File Templates.
+ * ClientServerComm.java
+ *
+ * Buy_sell_exchange
+ * Kevin Reuter, Jordan Martin, and Matt Troutt
+ *
+ * This class handles the connection to the server to send and receive a list of connected clients.
  */
 public class ClientServerComm implements Runnable{
     private static Socket socket;
@@ -22,6 +22,9 @@ public class ClientServerComm implements Runnable{
     private BufferedReader in;
     private LinkedList<Client> clients;
 
+    /**
+     * Constructor that sets up the socket to handle the communication between client and server
+     */
     public ClientServerComm(){
         try{
             //Change the address
@@ -34,6 +37,12 @@ public class ClientServerComm implements Runnable{
         }
     }
 
+    /**
+     * This method overrides run within Runnable to handle different threads.
+     *
+     * It waits for incoming messages and then passes them to an interpreter method for parsing.
+     */
+    @Override
     public void run(){
         try{
 
@@ -49,6 +58,11 @@ public class ClientServerComm implements Runnable{
 
     }
 
+    /**
+     * This method interprets the incoming messages and calls the appropriate method based on the received message.
+     * @param line The incoming message received by the socket
+     * @throws IOException Throws this if there is an error with reading in the list of clients
+     */
     public void interpret(String line) throws IOException {
         if(line.equals("send_port")) {
             out.println(ClientSocket.getPort());
@@ -70,6 +84,9 @@ public class ClientServerComm implements Runnable{
 
     }
 
+    /**
+     * This method sends a message to the server telling it that the client wants the list of connected clients.
+     */
     public void sendGetList(){
         String output = "get_list";
         out.println(output);
@@ -77,19 +94,15 @@ public class ClientServerComm implements Runnable{
 
     }
 
+    /**
+     * This getter method returns the current list of connected clients
+     * @return The current list of connected clients.
+     */
     public LinkedList<Client> getClientList(){
         if(!clients.isEmpty())
             return clients;
 
         return null;
-    }
-
-    public void closeSocket(){
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
     }
 
 }
