@@ -20,6 +20,7 @@ public class ClientSocket extends Thread{
 
     private DatagramSocket socket;
     private BuySellUI ui;
+    private static int port;
 
     /**
      * Constructor method that creates the Datagram socket to send and receive messages.
@@ -27,7 +28,7 @@ public class ClientSocket extends Thread{
     public ClientSocket(BuySellUI ui) {
         try {
             Random rand = new Random();
-            int port = 3000;
+            port = 3000;
             socket = new DatagramSocket(port);
 
         } catch (SocketException e) {
@@ -147,6 +148,10 @@ public class ClientSocket extends Thread{
         }
 
         return clients;
+    }
+
+    public static int getPort(){
+        return port;
     }
 
 
