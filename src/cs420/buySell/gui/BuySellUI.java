@@ -1800,7 +1800,7 @@ public class BuySellUI extends javax.swing.JFrame {
     public String formatDate(String date){
             String formatedDate = date;
             
-            formatedDate = date.substring(0,9);
+            formatedDate = date.substring(0,10);
 
             
             return formatedDate;
