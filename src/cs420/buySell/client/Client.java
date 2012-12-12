@@ -25,4 +25,12 @@ public class Client {
     public int getPort() {
         return port;
     }
+
+    public String toString(){
+        String output = "";
+        output += address;
+        output += ": ";
+        output += port;
+        return output;
+    }
 }
