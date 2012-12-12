@@ -9,6 +9,7 @@ package cs420.buySell.gui;
 import java.awt.event.ActionEvent;
 import java.net.InetAddress;
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -829,27 +830,27 @@ public class BuySellUI extends javax.swing.JFrame {
     private void buying_deleteActionPerformed(ActionEvent evt) {//GEN-FIRST:event_buying_deleteActionPerformed
         // TODO add your handling code here:
         
-                try{
+        try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        ResultSet rs = null;
-        
-        int row = wtb_Listing.getSelectedRow();
-        String r1 = wtb_Listing.getModel().getValueAt(row, 0).toString();
-        inst=con.createStatement();
-        inst.executeUpdate(q.qDeleteWTB(r1));
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            ResultSet rs = null;
 
-        this.refreshMyWTB();
-        this.refreshWTS();
-        
-        String SQL = q.qGetUserPool();
-        rs = stmt.executeQuery(SQL);
-        socket.updateBuy(rs);
+            int row = wtb_Listing.getSelectedRow();
+            String r1 = wtb_Listing.getModel().getValueAt(row, 0).toString();
+            inst=con.createStatement();
+            inst.executeUpdate(q.qDeleteWTB(r1));
+
+            this.refreshMyWTB();
+            this.refreshWTS();
+
+            comm.sendGetList();
+            LinkedList<Client> clients = comm.getClientList();
+            socket.sendUpdateBuy(clients);
 
         }
        
@@ -920,24 +921,24 @@ public class BuySellUI extends javax.swing.JFrame {
         try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        ResultSet rs = null;
-        
-        int row = wtsItem.getSelectedRow();
-        String r1 = wtsItem.getModel().getValueAt(row, 0).toString();
-        inst=con.createStatement();
-        inst.executeUpdate(q.qDeleteWTS(r1));
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            ResultSet rs = null;
 
-        this.refreshMyWTS();
-        this.refreshWTB();
-        
-        String SQL = q.qGetUserPool();
-        rs = stmt.executeQuery(SQL);
-        socket.updateSell(rs);
+            int row = wtsItem.getSelectedRow();
+            String r1 = wtsItem.getModel().getValueAt(row, 0).toString();
+            inst=con.createStatement();
+            inst.executeUpdate(q.qDeleteWTS(r1));
+
+            this.refreshMyWTS();
+            this.refreshWTB();
+
+            comm.sendGetList();
+            LinkedList<Client> clients = comm.getClientList();
+            socket.sendUpdateSell(clients);
         
 
         }
@@ -996,48 +997,49 @@ public class BuySellUI extends javax.swing.JFrame {
         try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        Statement st = null;
-        Statement st2 = null;
-        ResultSet rs = null;
-        ResultSet rs2 = null;
-        
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            Statement st = null;
+            Statement st2 = null;
+            ResultSet rs = null;
+            ResultSet rs2 = null;
 
 
-        String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
-        stmt = con.createStatement();
-        inst=con.createStatement();
-        st = con.createStatement();
-        
-         
-        rs = stmt.executeQuery(SQL);
 
-        if(rs.next()){
+            String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
+            stmt = con.createStatement();
+            inst=con.createStatement();
+            st = con.createStatement();
 
-            String items = q.qGetItems(s3, "nil", "nil");
-            rs2 = st.executeQuery(items);
-            if(!(rs2.next())){
-                st2 = con.createStatement();
-                st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
-            
-               
-            }
-            
-            s6 = rs.getString(1);
-        
-            inst.executeUpdate((q.qInsertWTB(s1, s2, s9, s7, s8, s6,s10)));
-            
-            this.refreshMyWTB();
-            this.refreshWTS();
-            
-            SQL = q.qGetUserPool();
+
             rs = stmt.executeQuery(SQL);
-            socket.updateBuy(rs);
-        }
+
+            if(rs.next()){
+
+                String items = q.qGetItems(s3, "nil", "nil");
+                rs2 = st.executeQuery(items);
+                if(!(rs2.next())){
+                    st2 = con.createStatement();
+                    st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
+
+
+                }
+
+                s6 = rs.getString(1);
+
+                inst.executeUpdate((q.qInsertWTB(s1, s2, s9, s7, s8, s6,s10)));
+
+                this.refreshMyWTB();
+                this.refreshWTS();
+
+                comm.sendGetList();
+                LinkedList<Client> clients = comm.getClientList();
+                socket.sendUpdateBuy(clients);
+
+            }
         }
        
          catch(Exception e){
@@ -1064,45 +1066,46 @@ public class BuySellUI extends javax.swing.JFrame {
         try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        Statement st = null;
-        Statement st2 = null;
-        ResultSet rs = null;
-        ResultSet rs2 = null;
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            Statement st = null;
+            Statement st2 = null;
+            ResultSet rs = null;
+            ResultSet rs2 = null;
 
-        String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
-        stmt = con.createStatement();
-        inst=con.createStatement();
-        st = con.createStatement();
-        
-         
-        rs = stmt.executeQuery(SQL);
+            String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
+            stmt = con.createStatement();
+            inst=con.createStatement();
+            st = con.createStatement();
 
-        if(rs.next()){
- 
-            String items = q.qGetItems(s3, "nil", "nil");
-            rs2 = st.executeQuery(items);
-            if(!(rs2.next())){
-                st2 = con.createStatement();
-                st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
-            
 
-            }
-            
-            s6 = rs.getString(1);
-        
-            
-            inst.executeUpdate((q.qInsertWTS(s1, s2, s6, s8, s9, s7)));
-            this.refreshMyWTS();
-            this.refreshWTB();
-            SQL = q.qGetUserPool();
             rs = stmt.executeQuery(SQL);
-            socket.updateSell(rs);
-        }
+
+            if(rs.next()){
+
+                String items = q.qGetItems(s3, "nil", "nil");
+                rs2 = st.executeQuery(items);
+                if(!(rs2.next())){
+                    st2 = con.createStatement();
+                    st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
+
+
+                }
+
+                s6 = rs.getString(1);
+
+
+                inst.executeUpdate((q.qInsertWTS(s1, s2, s6, s8, s9, s7)));
+                this.refreshMyWTS();
+                this.refreshWTB();
+
+                comm.sendGetList();
+                LinkedList<Client> clients = comm.getClientList();
+                socket.sendUpdateSell(clients);
+            }
         }
        
          catch(Exception e){
@@ -1179,47 +1182,48 @@ public class BuySellUI extends javax.swing.JFrame {
         try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        Statement st = null;
-        Statement st2 = null;
-        ResultSet rs = null;
-        ResultSet rs2 = null;
-        
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            Statement st = null;
+            Statement st2 = null;
+            ResultSet rs = null;
+            ResultSet rs2 = null;
 
 
-        String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
-        stmt = con.createStatement();
-        inst=con.createStatement();
-        st = con.createStatement();
-        
-         
-        rs = stmt.executeQuery(SQL);
 
-        if(rs.next()){
+            String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
+            stmt = con.createStatement();
+            inst=con.createStatement();
+            st = con.createStatement();
 
-            String items = q.qGetItems(s3, "nil", "nil");
-            rs2 = st.executeQuery(items);
-            if(!(rs2.next())){
-                st2 = con.createStatement();
-                st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
-            
- 
-            }
-            
-            s6 = rs.getString(1);
-        
-            
-            inst.executeUpdate((q.qUpdateWTS(s2, s6, s8, s9, s7, s1)));
-            this.refreshMyWTS();
-            this.refreshWTB();
-            SQL = q.qGetUserPool();
+
             rs = stmt.executeQuery(SQL);
-            socket.updateSell(rs);
-        }
+
+            if(rs.next()){
+
+                String items = q.qGetItems(s3, "nil", "nil");
+                rs2 = st.executeQuery(items);
+                if(!(rs2.next())){
+                    st2 = con.createStatement();
+                    st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
+
+
+                }
+
+                s6 = rs.getString(1);
+
+
+                inst.executeUpdate((q.qUpdateWTS(s2, s6, s8, s9, s7, s1)));
+                this.refreshMyWTS();
+                this.refreshWTB();
+
+                comm.sendGetList();
+                LinkedList<Client> clients = comm.getClientList();
+                socket.sendUpdateSell(clients);
+            }
         }
        
          catch(Exception e){
@@ -1248,48 +1252,48 @@ public class BuySellUI extends javax.swing.JFrame {
         try{
             
        
-        DB_Conn dbcon=new DB_Conn();
-        Connection con = dbcon.getCon();
-        Queries q = new Queries();
-        Statement stmt = null;
-        Statement inst = null;
-        Statement st = null;
-        Statement st2 = null;
-        ResultSet rs = null;
-        ResultSet rs2 = null;
-        
+            DB_Conn dbcon=new DB_Conn();
+            Connection con = dbcon.getCon();
+            Queries q = new Queries();
+            Statement stmt = null;
+            Statement inst = null;
+            Statement st = null;
+            Statement st2 = null;
+            ResultSet rs = null;
+            ResultSet rs2 = null;
 
 
-        String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
-        stmt = con.createStatement();
-        inst=con.createStatement();
-        st = con.createStatement();
-        
-         
-        rs = stmt.executeQuery(SQL);
 
-        if(rs.next()){
+            String SQL = q.qGetVendors(s6, "nil", "nil", "nil");
+            stmt = con.createStatement();
+            inst=con.createStatement();
+            st = con.createStatement();
 
-            String items = q.qGetItems(s3, "nil", "nil");
-            rs2 = st.executeQuery(items);
-            if(!(rs2.next())){
-                st2 = con.createStatement();
-                st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
-            
-               
-            }
-            
-            s6 = rs.getString(1);
 
-            inst.executeUpdate((q.qUpdateWTB(s2, s9, s7, s8, s6, s10,s1)));
-            
-            this.refreshMyWTB();
-            this.refreshWTS();
-            
-            SQL = q.qGetUserPool();
             rs = stmt.executeQuery(SQL);
-            socket.updateBuy(rs);
-        }
+
+            if(rs.next()){
+
+                String items = q.qGetItems(s3, "nil", "nil");
+                rs2 = st.executeQuery(items);
+                if(!(rs2.next())){
+                    st2 = con.createStatement();
+                    st2.executeUpdate(q.qInsertItem(s2, s3, s4, s5));
+
+
+                }
+
+                s6 = rs.getString(1);
+
+                inst.executeUpdate((q.qUpdateWTB(s2, s9, s7, s8, s6, s10,s1)));
+
+                this.refreshMyWTB();
+                this.refreshWTS();
+
+                comm.sendGetList();
+                LinkedList<Client> clients = comm.getClientList();
+                socket.sendUpdateBuy(clients);
+            }
         }
        
          catch(Exception e){
