@@ -27,9 +27,9 @@ public class ClientSocket extends Thread{
     public ClientSocket(BuySellUI ui) {
         try {
             Random rand = new Random();
-            int port = rand.nextInt(30000);
+            int port = 3000;
             socket = new DatagramSocket(port);
-            
+
         } catch (SocketException e) {
             e.printStackTrace();
         }
