@@ -17,22 +17,17 @@ import java.util.LinkedList;
 
 public class Server {
 
-    //private Socket socket;
-    private static ServerSocket serverSocket;
-
-    private static int port;
     private static final int MAX_CONNECTIONS = 100;
-    private static LinkedList<Client> clients;
 
     /**
      * Main method that starts the server and handles starts a thread for each incoming connection.
      * @param args Command line arguments(there are none).
      */
     public static void main(String[] args) {
-        clients = new LinkedList<Client>();
+        LinkedList<Client> clients = new LinkedList<Client>();
         try{
-            port = 25001;
-            serverSocket = new ServerSocket(port);
+            int port = 25001;
+            ServerSocket serverSocket = new ServerSocket(port);
 
             Socket server;
             int connections = 0;
@@ -58,7 +53,6 @@ public class Server {
  */
 class Communication implements Runnable{
     private Socket socket;
-    private String line;
     private LinkedList<Client> clients;
 
     /**
@@ -90,6 +84,7 @@ class Communication implements Runnable{
             Client client = new Client(socket.getInetAddress(), port);
             clients.add(client);
 
+            String line;
             while((line = in.readLine()) != null){
                 interpret(line);
             }
