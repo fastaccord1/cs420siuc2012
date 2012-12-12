@@ -18,4 +18,6 @@ Run
     Jordan Martin to have your IP added to the database firewall.
 
 Use
-    Now that the project is running, you can view and enter items you wish to buy and sell.  
+    Now that the project is running, you can login.  Please use username test1 or test2 with password SIUCS and then click 
+    login.  Now you will be in the main program and can both list and view items for sale and that you wish to buy.
+    
