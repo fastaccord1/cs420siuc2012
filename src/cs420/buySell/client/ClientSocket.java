@@ -14,6 +14,9 @@ import cs420.buySell.gui.*;
 /**
  * ClientSocket.java
  *
+ * Buy_sell_exchange
+ * Kevin Reuter, Jordan Martin, Matt Troutt
+ *
  * This class will handle communication between the different clients. It will send the update messages
  * when necessary and call an update method when a message is received.
  */
@@ -29,7 +32,9 @@ public class ClientSocket implements Runnable{
     public ClientSocket(BuySellUI ui) {
         try {
             Random rand = new Random();
-            port = 3000;
+            do{
+                port = rand.nextInt(25000);
+            } while(port < 9000);
             socket = new DatagramSocket(port);
 
         } catch (SocketException e) {
@@ -40,6 +45,10 @@ public class ClientSocket implements Runnable{
 
     }
 
+    /**
+     * This method sends out a message to all connected clients to update the WantToBuy table
+     * @param clients A LinkedList of connected clients.
+     */
     public void sendUpdateBuy(LinkedList<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
@@ -51,6 +60,10 @@ public class ClientSocket implements Runnable{
         }
     }
 
+    /**
+     * This method sends out a message to all connected clients to update the WantToSell table.
+     * @param clients A LinkedList of connected clients.
+     */
     public void sendUpdateSell(LinkedList<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
@@ -62,6 +75,12 @@ public class ClientSocket implements Runnable{
         }
     }
 
+    /**
+     * Sends a message to a specific client
+     * @param sendMessage The message to be sent
+     * @param client The address of the client that will receive the message
+     * @param port The port of the receiving client.
+     */
     public void sendData(String sendMessage, InetAddress client, int port) {
         try {
             byte[] data = sendMessage.getBytes();
@@ -76,6 +95,9 @@ public class ClientSocket implements Runnable{
 
     }
 
+    /**
+     * This method receives packets from the datagram socket and sends them to an interpreter method.
+     */
     public void waitForPackets() {
         try{
             byte[] data = new byte[1024];
@@ -98,7 +120,10 @@ public class ClientSocket implements Runnable{
     }
 
 
-
+    /**
+     * This method interprets received messages and calls the appropriate method for updating
+     * @param message The message that was received by the socket
+     */
     public void interpret(String message) {
         if (message.contains("Update_want_to_sell")) {
             ui.refreshWTS();
@@ -109,29 +134,17 @@ public class ClientSocket implements Runnable{
         }
     }
 
-
-
-    public List<Client> parseClients(ResultSet rs) throws SQLException, UnknownHostException {
-        List<Client> clients = new ArrayList<Client>();
-        while(rs.next()) {
-            String address = rs.getString(1);
-            String port = rs.getString(2);
-
-            int outPort = Integer.parseInt(port);
-            InetAddress outAddress = InetAddress.getByName(address);
-
-            Client client = new Client(outAddress, outPort);
-            clients.add(client);
-        }
-
-        return clients;
-    }
-
+    /**
+     * This method gets the port of the current client object
+     * @return The port of the current client
+     */
     public static int getPort(){
         return port;
     }
 
-
+    /**
+     * This method overrides the run method from Runnable to allow for multiple threads.
+     */
     @Override
     public void run() {
         this.waitForPackets();
