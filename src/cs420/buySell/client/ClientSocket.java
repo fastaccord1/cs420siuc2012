@@ -109,31 +109,7 @@ public class ClientSocket extends Thread{
         }
     }
 
-    public void updateBuy(ResultSet rs) {
-        try {
-            List<Client> clients = parseClients(rs);
-            sendUpdateBuy(clients);
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
-    }
-
-    public void updateSell(ResultSet rs) {
-
-        try {
-            List<Client> clients = parseClients(rs);
-            sendUpdateSell(clients);
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-
-    }
 
     public List<Client> parseClients(ResultSet rs) throws SQLException, UnknownHostException {
         List<Client> clients = new ArrayList<Client>();
