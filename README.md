@@ -27,12 +27,12 @@ Use
     
     Exit - All tabs have a button that can be pressed for exiting the program at anytime.
     
-    WTB tab - Listing of items that are for sale. The buttons at the bottom will allow you to refresh the list, and view the 
+    WTS tab - Listing of items that are for sale. The buttons at the bottom will allow you to refresh the list, and view the 
               items and vendors in a more detailed manner. Simply click on an item from the list and press the "Items Details"
               or "Vendor Info" button to launch a popup window displaying more information about them. 
               
     My Items for Sale tab - This tab allows you to add, edit, or remove the items you have for sale. These items are the ones 
-              that show up in the WTB tab.
+              that show up in the WTS tab.
               
               Note: Listing ID's need to be unique, If the item your trying to sell already exists you need to use it's Item ID 
                     and information. If it doesn't exist, use a unique item ID, and the item should be automatically added to the 
@@ -43,9 +43,9 @@ Use
               Removing Item - Click the Item you wish to remove and hit "Remove Selected Item"
               Add Item - Simple fill in all the boxes and hit the "Add New Item" button. 
               
-    WTS tab - This tab allows users to browse items that people are currently looking to buy, but couldn't find it for sale in 
-              the WTB listing.
-              This tab works the same way as the WTB tab. 
+    WTB tab - This tab allows users to browse items that people are currently looking to buy, but couldn't find it for sale in 
+              the WTS listing.
+              This tab works the same way as the WTS tab. 
               
     Items I Want tab - This tab allows users to add, edit, or remove items they wish to purchase. 
                        The tab uses the same set up as the "My Items for Sale" tab. 
