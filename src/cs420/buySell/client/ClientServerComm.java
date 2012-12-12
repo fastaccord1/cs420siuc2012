@@ -22,9 +22,10 @@ public class ClientServerComm implements Runnable{
     private BufferedReader in;
     private LinkedList<Client> clients;
 
-    public ClientServerComm(Socket socket){
+    public ClientServerComm(){
         try{
-            this.socket = socket;
+            //Change the address
+            socket = new Socket(InetAddress.getByName(""), 25001);
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             clients = new LinkedList<Client>();
