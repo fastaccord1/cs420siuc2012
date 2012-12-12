@@ -4,7 +4,9 @@ cs420siuc2012
 Our project for CS 420 in Fall 2012 at SIUC
 
 Note: The server being used to send updates to all users is a private server and we be taken down on Monday, Dec 17th
-The server code will be included and you can start the server yourself for testing after that point in time. 
+The server code will be included and you can start the server yourself for testing after that point in time.
+    To do this, change the SERVER constant within ClientServerComm.java to the IP address of the host the server jar will
+    be run on.
 
 Extract: in the directory you wish to host the project in do the following
   Linux: 
