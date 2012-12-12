@@ -29,7 +29,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane2" alignment="1" max="32767" attributes="0"/>
+          <Component id="jTabbedPane2" alignment="1" pref="707" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -46,8 +46,8 @@
         <Container class="javax.swing.JPanel" name="wtb_panel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="WTB">
-                <Property name="tabTitle" type="java.lang.String" value="WTB"/>
+              <JTabbedPaneConstraints tabName="WTS">
+                <Property name="tabTitle" type="java.lang.String" value="WTS"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -63,7 +63,7 @@
                       <Component id="wtb_item_details" min="-2" pref="101" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="wtb_vendor_info" min="-2" pref="106" max="-2" attributes="0"/>
-                      <EmptySpace pref="220" max="32767" attributes="0"/>
+                      <EmptySpace pref="225" max="32767" attributes="0"/>
                       <Component id="jButton3" min="-2" pref="103" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -73,7 +73,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane2" min="-2" pref="281" max="-2" attributes="0"/>
-                      <EmptySpace pref="150" max="32767" attributes="0"/>
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="wtb_refresh" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="wtb_item_details" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -220,7 +220,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="sellList_save" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="119" max="32767" attributes="0"/>
+                              <EmptySpace pref="28" max="32767" attributes="0"/>
                               <Component id="sellList_exit" min="-2" pref="75" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
@@ -250,7 +250,7 @@
                                   <Component id="jTextField5" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextField6" alignment="0" pref="100" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="115" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -309,7 +309,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="93" max="32767" attributes="0"/>
+                      <EmptySpace pref="104" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="sellList_add" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sellList_delete" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -506,8 +506,8 @@
         <Container class="javax.swing.JPanel" name="wts_panel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="WTS">
-                <Property name="tabTitle" type="java.lang.String" value="WTS"/>
+              <JTabbedPaneConstraints tabName="WTB">
+                <Property name="tabTitle" type="java.lang.String" value="WTB"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -523,7 +523,7 @@
                       <Component id="wts_Item_Details" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="wts_Vendor_Info" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="188" max="32767" attributes="0"/>
                       <Component id="wts_exit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
@@ -533,7 +533,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane3" min="-2" pref="305" max="-2" attributes="0"/>
-                      <EmptySpace pref="98" max="32767" attributes="0"/>
+                      <EmptySpace pref="105" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="wts_refresh" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="wts_Item_Details" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -625,7 +625,7 @@
                               <Component id="buying_delete" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="buying_save" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="216" max="32767" attributes="0"/>
+                              <EmptySpace pref="116" max="32767" attributes="0"/>
                               <Component id="buying_exit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
@@ -734,7 +734,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                      <EmptySpace pref="109" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="buying_addItem" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="buying_delete" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -973,7 +973,7 @@
                               <Component id="jButton18" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jButton19" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="194" max="32767" attributes="0"/>
+                              <EmptySpace pref="97" max="32767" attributes="0"/>
                               <Component id="jButton20" min="-2" pref="76" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
@@ -1010,7 +1010,7 @@
                           <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField22" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="105" max="32767" attributes="0"/>
+                      <EmptySpace pref="117" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButton17" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton18" alignment="3" min="-2" max="-2" attributes="0"/>
