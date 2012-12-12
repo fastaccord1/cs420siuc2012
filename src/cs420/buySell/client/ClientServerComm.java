@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,8 +58,8 @@ public class ClientServerComm implements Runnable{
             while(!(line = in.readLine()).equals("end_of_list")){
 
                 int index = line.indexOf(':');
-                String address = line.substring(0, index - 1);
-                String port = line.substring(index + 1);
+                String address = line.substring(1, index);
+                String port = line.substring(index + 2);
                 int portNum = Integer.parseInt(port);
                 Client client = new Client(InetAddress.getByName(address), portNum);
                 clients.add(client);
@@ -82,22 +83,52 @@ public class ClientServerComm implements Runnable{
         return null;
     }
 
+    public void closeSocket(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+    /*
     public static void main(String[] args){
         try {
-            Socket socket = new Socket(InetAddress.getByName("192.168.1."), 25001);
+            ClientSocket test = new ClientSocket(null);
+            Socket socket = new Socket(InetAddress.getByName("192.168.1.104"), 25001);
             ClientServerComm comm = new ClientServerComm(socket);
             Thread t = new Thread(comm);
             t.start();
+            Thread.sleep(5000);
             comm.sendGetList();
+            Thread.sleep(5000);
             LinkedList<Client> clients= comm.getClientList();
-            for(Client client : clients){
-                System.out.println(client);
+            if(clients != null){
+                for(Client client : clients){
+                    System.out.println(client);
+                }
             }
+            else{
+                System.out.println("Something went wrong");
+            }
+            System.out.println("Type quit to quit");
+            while(true){
+                Scanner input = new Scanner(System.in);
+                if(input.next().equals("quit"))
+                    break;
+            }
+            comm.closeSocket();
+
+            System.exit(0);
+
+
 
         } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
 
     }
+    */
 }
