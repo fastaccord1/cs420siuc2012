@@ -86,7 +86,7 @@
     </target>
 
     <target name="jar.client" depends="unzip-lib">
-        <jar destfile="out/jar/test.jar">
+        <jar destfile="out/jar/client.jar">
             <manifest>
                 <attribute name="Main-Class" value="cs420.buySell.gui.Login"/>
             </manifest>
@@ -100,7 +100,7 @@
             <manifest>
                 <attribute name="Main-Class" value="cs420.buySell.server.Server"/>
             </manifest>
-            <fileset dir="out/server" includes="**/*.class"/>
+            <zipfileset dir="out/server" includes="**/*.class"/>
         </jar>
     </target>
 
@@ -112,6 +112,12 @@
         </unzip>
     </target>
 
+    <target name="cleanup">
+        <delete dir="out/tempLib"/>
+        <delete dir="out/client"/>
+        <delete dir="out/server"/>
+    </target>
 
-    <target name="all" depends="clean, init, compile.client, jar.client, jar.server" description="Make All" />
+
+    <target name="all" depends="clean, init, compile.client, compile.server, jar.client, jar.server, cleanup" description="Make All" />
 </project>
