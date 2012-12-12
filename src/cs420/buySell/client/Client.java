@@ -3,25 +3,39 @@ package cs420.buySell.client;
 import java.net.InetAddress;
 
 /**
- * Created with IntelliJ IDEA.
- * User: kreuter
- * Date: 11/30/12
- * Time: 7:08 PM
- * To change this template use File | Settings | File Templates.
+ * Client.java
+ *
+ * Buy_sell_exchange
+ * Kevin Reuter, Jordan Martin, and Matt Troutt
+ *
+ * This class allows for the address and port of a client to be stored in one location
  */
 public class Client {
     private InetAddress address;
     private int port;
 
+    /**
+     * Constructor that initializes all of the variables
+     * @param address The address of the client
+     * @param port The port of the client
+     */
     public Client(InetAddress address, int port) {
         this.address = address;
         this.port = port;
     }
 
+    /**
+     * This gets the address of the current client object
+     * @return The address of the client object
+     */
     public InetAddress getAddress() {
         return address;
     }
 
+    /**
+     * This gets the port of the current client object
+     * @return The port of the client object
+     */
     public int getPort() {
         return port;
     }
