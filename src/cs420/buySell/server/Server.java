@@ -28,7 +28,7 @@ public class Server {
         try{
             int port = 25001;
             ServerSocket serverSocket = new ServerSocket(port);
-
+            System.out.println("Starting to listen on port: " + port);
             Socket server;
             int connections = 0;
             while(connections++ < MAX_CONNECTIONS){
