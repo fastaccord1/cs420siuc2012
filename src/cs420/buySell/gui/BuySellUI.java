@@ -7,6 +7,7 @@
 package cs420.buySell.gui;
 
 import java.awt.event.ActionEvent;
+import java.net.InetAddress;
 import java.sql.*;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ public class BuySellUI extends javax.swing.JFrame {
      */
     String user = null;
     private ClientSocket socket;
+    private ClientServerComm comm;
     
     public BuySellUI(String username) {
         initComponents();
@@ -38,6 +40,9 @@ public class BuySellUI extends javax.swing.JFrame {
         this.refreshVendors();
         socket = new ClientSocket(this);
         socket.start();
+        comm = new ClientServerComm();
+        Thread commThread = new Thread(comm);
+        commThread.start();
 
 
     }
