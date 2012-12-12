@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.LinkedList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,12 +19,14 @@ public class ClientServerComm implements Runnable{
     private static Socket socket;
     private static PrintWriter out;
     private BufferedReader in;
+    private LinkedList<Client> clients;
 
     public ClientServerComm(Socket socket){
         try{
             this.socket = socket;
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            clients = new LinkedList<Client>();
         } catch(IOException e){
             e.printStackTrace();
         }
@@ -50,23 +53,33 @@ public class ClientServerComm implements Runnable{
             out.flush();
         }
         else if(line.equals("list_incoming")){
+            clients.clear();
             while(!(line = in.readLine()).equals("end_of_list")){
+
                 int index = line.indexOf(':');
                 String address = line.substring(0, index - 1);
                 String port = line.substring(index + 1);
                 int portNum = Integer.parseInt(port);
                 Client client = new Client(InetAddress.getByName(address), portNum);
+                clients.add(client);
 
             }
         }
 
     }
 
-    public static void getList(){
+    public void sendGetList(){
         String output = "get_list";
         out.println(output);
         out.flush();
 
+    }
+
+    public LinkedList<Client> getClientList(){
+        if(!clients.isEmpty())
+            return clients;
+
+        return null;
     }
 
     public static void main(String[] args){
@@ -75,7 +88,12 @@ public class ClientServerComm implements Runnable{
             ClientServerComm comm = new ClientServerComm(socket);
             Thread t = new Thread(comm);
             t.start();
-            ClientServerComm.getList();
+            comm.sendGetList();
+            LinkedList<Client> clients= comm.getClientList();
+            for(Client client : clients){
+                System.out.println(client);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
