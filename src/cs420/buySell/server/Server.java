@@ -73,10 +73,11 @@ class Communication implements Runnable{
             out.println(output);
             out.flush();
             String input = in.readLine();
-            //System.out.println(input);
+
             int port = Integer.parseInt(input);
             Client client = new Client(socket.getInetAddress(), port);
             clients.add(client);
+
             while((line = in.readLine()) != null){
                 interpret(line);
             }
@@ -91,7 +92,6 @@ class Communication implements Runnable{
 
     public void interpret(String input) throws IOException {
         if(input.equals("get_list")){
-            System.out.println("Going to send list");
             sendList();
         }
 
@@ -103,7 +103,6 @@ class Communication implements Runnable{
         out.println(output);
         out.flush();
         for(Client client : clients){
-            System.out.println("Sending: " + client);
             out.println(client);
             out.flush();
         }

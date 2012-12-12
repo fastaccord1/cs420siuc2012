@@ -63,7 +63,6 @@ public class ClientServerComm implements Runnable{
                 String port = line.substring(index + 2);
                 int portNum = Integer.parseInt(port);
                 Client client = new Client(InetAddress.getByName(address), portNum);
-                System.out.println("Received: " + client);
                 clients.add(client);
 
             }
@@ -92,45 +91,5 @@ public class ClientServerComm implements Runnable{
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
-    /*
-    public static void main(String[] args){
-        try {
-            ClientSocket test = new ClientSocket(null);
-            Socket socket = new Socket(InetAddress.getByName("192.168.1.104"), 25001);
-            ClientServerComm comm = new ClientServerComm(socket);
-            Thread t = new Thread(comm);
-            t.start();
-            Thread.sleep(5000);
-            comm.sendGetList();
-            Thread.sleep(5000);
-            LinkedList<Client> clients= comm.getClientList();
-            if(clients != null){
-                for(Client client : clients){
-                    System.out.println(client);
-                }
-            }
-            else{
-                System.out.println("Something went wrong");
-            }
-            System.out.println("Type quit to quit");
-            while(true){
-                Scanner input = new Scanner(System.in);
-                if(input.next().equals("quit"))
-                    break;
-            }
-            comm.closeSocket();
 
-            System.exit(0);
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-
-    }
-    */
 }

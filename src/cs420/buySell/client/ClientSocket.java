@@ -44,7 +44,6 @@ public class ClientSocket implements Runnable{
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
-            System.out.println("Sending to: " + address);
 
             String output = "Update_want_to_buy";
 
@@ -56,7 +55,6 @@ public class ClientSocket implements Runnable{
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
-            System.out.println("Sending to: " + address);
 
             String output = "Update_want_to_sell";
 
@@ -69,7 +67,6 @@ public class ClientSocket implements Runnable{
             byte[] data = sendMessage.getBytes();
 
             DatagramPacket sendPacket = new DatagramPacket(data, data.length, client, port);
-            System.out.println("Sending packet");
             socket.send(sendPacket);
 
 
@@ -84,8 +81,6 @@ public class ClientSocket implements Runnable{
             byte[] data = new byte[1024];
             DatagramPacket received = new DatagramPacket(data, data.length);
             while(true) {
-
-
 
                 socket.receive(received);
                 String output = new String(received.getData());
