@@ -80,6 +80,7 @@
 
     <target name="compile.server">
         <javac destdir="out/server" classpath="src" includeantruntime="false">
+            <classpath path="out/client"/>
             <src path="src/cs420/buySell/client"/>
             <src path="src/cs420/buySell/server"/>
         </javac>
