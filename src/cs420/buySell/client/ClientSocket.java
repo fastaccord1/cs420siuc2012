@@ -87,10 +87,11 @@ public class ClientSocket implements Runnable{
 
 
 
-                    socket.receive(received);
-                    String output = new String(received.getData());
+                socket.receive(received);
+                String output = new String(received.getData());
 
-                    interpret(output);
+
+                interpret(output);
 
 
 
@@ -104,12 +105,10 @@ public class ClientSocket implements Runnable{
 
 
     public void interpret(String message) {
-        if (message.equals("Update_want_to_sell")) {
-            System.out.println("Something came in");
+        if (message.contains("Update_want_to_sell")) {
             ui.refreshWTS();
 
-        } else if (message.equals("Update_want_to_buy")) {
-            System.out.println("buy came in");
+        } else if (message.contains("Update_want_to_buy")) {
             ui.refreshWTB();
 
         }
