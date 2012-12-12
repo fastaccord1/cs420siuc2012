@@ -5,6 +5,7 @@ import java.net.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -74,7 +75,7 @@ public class ClientSocket extends Thread{
 
     }
 
-    public void sendUpdateBuy(List<Client> clients) {
+    public void sendUpdateBuy(LinkedList<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
@@ -85,7 +86,7 @@ public class ClientSocket extends Thread{
         }
     }
 
-    public void sendUpdateSell(List<Client> clients) {
+    public void sendUpdateSell(LinkedList<Client> clients) {
         for(Client client : clients) {
             InetAddress address = client.getAddress();
             int port = client.getPort();
