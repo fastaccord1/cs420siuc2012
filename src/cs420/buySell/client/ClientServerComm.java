@@ -15,8 +15,8 @@ import java.net.Socket;
  * To change this template use File | Settings | File Templates.
  */
 public class ClientServerComm implements Runnable{
-    private Socket socket;
-    private PrintWriter out;
+    private static Socket socket;
+    private static PrintWriter out;
     private BufferedReader in;
 
     public ClientServerComm(Socket socket){
@@ -51,9 +51,35 @@ public class ClientServerComm implements Runnable{
         }
         else if(line.equals("list_incoming")){
             while(!(line = in.readLine()).equals("end_of_list")){
+                int index = line.indexOf(':');
+                String address = line.substring(0, index - 1);
+                String port = line.substring(index + 1);
+                int portNum = Integer.parseInt(port);
+                Client client = new Client(InetAddress.getByName(address), portNum);
 
             }
         }
+
+    }
+
+    public static void getList(){
+        String output = "get_list";
+        out.println(output);
+        out.flush();
+
+    }
+
+    public static void main(String[] args){
+        try {
+            Socket socket = new Socket(InetAddress.getByName("192.168.1."), 25001);
+            ClientServerComm comm = new ClientServerComm(socket);
+            Thread t = new Thread(comm);
+            t.start();
+            ClientServerComm.getList();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
 
     }
 }
