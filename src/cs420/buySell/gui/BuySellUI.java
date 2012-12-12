@@ -40,7 +40,8 @@ public class BuySellUI extends javax.swing.JFrame {
         this.refreshMyWTB();
         this.refreshVendors();
         socket = new ClientSocket(this);
-        socket.start();
+        Thread clientThread = new Thread(socket);
+        clientThread.start();
         comm = new ClientServerComm();
         Thread commThread = new Thread(comm);
         commThread.start();
@@ -849,6 +850,7 @@ public class BuySellUI extends javax.swing.JFrame {
             this.refreshWTS();
 
             comm.sendGetList();
+            Thread.sleep(100);
             LinkedList<Client> clients = comm.getClientList();
             socket.sendUpdateBuy(clients);
             socket.sendUpdateSell(clients);
@@ -938,6 +940,7 @@ public class BuySellUI extends javax.swing.JFrame {
             this.refreshWTB();
 
             comm.sendGetList();
+            Thread.sleep(100);
             LinkedList<Client> clients = comm.getClientList();
             socket.sendUpdateSell(clients);
             socket.sendUpdateBuy(clients);
@@ -1038,6 +1041,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 this.refreshWTS();
 
                 comm.sendGetList();
+                Thread.sleep(100);
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateBuy(clients);
                 socket.sendUpdateSell(clients);
@@ -1106,6 +1110,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 this.refreshWTB();
 
                 comm.sendGetList();
+                Thread.sleep(100);
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateSell(clients);
                 socket.sendUpdateBuy(clients);
@@ -1225,6 +1230,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 this.refreshWTB();
 
                 comm.sendGetList();
+                Thread.sleep(100);
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateSell(clients);
                 socket.sendUpdateBuy(clients);
@@ -1296,6 +1302,7 @@ public class BuySellUI extends javax.swing.JFrame {
                 this.refreshWTS();
 
                 comm.sendGetList();
+                Thread.sleep(100);
                 LinkedList<Client> clients = comm.getClientList();
                 socket.sendUpdateBuy(clients);
                 socket.sendUpdateSell(clients);

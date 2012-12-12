@@ -103,6 +103,7 @@ class Communication implements Runnable{
         out.println(output);
         out.flush();
         for(Client client : clients){
+            System.out.println("Sending: " + client);
             out.println(client);
             out.flush();
         }

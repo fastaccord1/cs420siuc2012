@@ -63,6 +63,7 @@ public class ClientServerComm implements Runnable{
                 String port = line.substring(index + 2);
                 int portNum = Integer.parseInt(port);
                 Client client = new Client(InetAddress.getByName(address), portNum);
+                System.out.println("Received: " + client);
                 clients.add(client);
 
             }
