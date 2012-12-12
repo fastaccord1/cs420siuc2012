@@ -951,6 +951,7 @@ public class BuySellUI extends javax.swing.JFrame {
 
     private void wts_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wts_refreshActionPerformed
         // TODO add your handling code here:
+
         this.refreshWTS();
     }//GEN-LAST:event_wts_refreshActionPerformed
 
