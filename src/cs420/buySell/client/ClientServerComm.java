@@ -21,7 +21,7 @@ public class ClientServerComm implements Runnable{
     private static PrintWriter out;
     private BufferedReader in;
     private LinkedList<Client> clients;
-    private final String SERVER="131.230.6.172";
+    private final String SERVER="";
 
     /**
      * Constructor that sets up the socket to handle the communication between client and server
