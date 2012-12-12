@@ -1,15 +1,14 @@
 package cs420.buySell.client;
 
-import java.io.IOException;
-import java.net.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import cs420.buySell.gui.BuySellUI;
 
-import cs420.buySell.gui.*;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * ClientSocket.java
@@ -99,22 +98,22 @@ public class ClientSocket implements Runnable{
      * This method receives packets from the datagram socket and sends them to an interpreter method.
      */
     public void waitForPackets() {
-        try{
-            byte[] data = new byte[1024];
-            DatagramPacket received = new DatagramPacket(data, data.length);
-            while(true) {
 
+        byte[] data = new byte[1024];
+        DatagramPacket received = new DatagramPacket(data, data.length);
+        while(true) {
+            try{
                 socket.receive(received);
                 String output = new String(received.getData());
 
 
                 interpret(output);
 
-
-
+            } catch(IOException e){
+                e.printStackTrace();
+                break;
             }
-        } catch(IOException e) {
-            e.printStackTrace();
+
         }
 
     }
